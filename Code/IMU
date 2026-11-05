@@ -1,0 +1,61 @@
+#include <Wire.h>
+#include <Adafruit_ICM20948.h>
+#include <Adafruit_Sensor.h>
+
+Adafruit_ICM20948 imu;
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+
+  Serial.println("IMU Test Starting");
+
+  if (!imu.begin_I2C()) {
+    Serial.println("IMU not detected!");
+    while (1) {
+      delay(10);
+    }
+  }
+
+  Serial.println("IMU connected!");
+}
+
+void loop() {
+  sensors_event_t accel;
+  sensors_event_t gyro;
+  sensors_event_t temp;
+  sensors_event_t mag;
+
+  imu.getEvent(&accel, &gyro, &temp, &mag);
+
+  Serial.print("Acceleration X: ");
+  Serial.println(accel.acceleration.x);
+
+  Serial.print("Acceleration Y: ");
+  Serial.println(accel.acceleration.y);
+
+  Serial.print("Acceleration Z: ");
+  Serial.println(accel.acceleration.z);
+
+  Serial.print("Angular Velocity X: ");
+Serial.println(gyro.gyro.x);
+
+Serial.print("Angular Velocity Y: ");
+Serial.println(gyro.gyro.y);
+
+Serial.print("Angular Velocity Z: ");
+Serial.println(gyro.gyro.z);
+
+Serial.print("Magnetic Field X: ");
+Serial.println(mag.magnetic.x);
+
+Serial.print("Magnetic Field Y: ");
+Serial.println(mag.magnetic.y);
+
+Serial.print("Magnetic Field Z: ");
+Serial.println(mag.magnetic.z);
+
+  Serial.println("--------------------");
+
+  delay(500);
+}
