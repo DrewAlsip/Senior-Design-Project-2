@@ -1,0 +1,42 @@
+import sys
+from PyQt6.QtWidgets import (
+    QApplication,
+    QWidget,
+    QVBoxLayout,
+    QLabel,
+    QPushButton
+)
+
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Localization Device GUI")
+
+        layout = QVBoxLayout()
+
+        self.latitude_label = QLabel("Latitude: N/A")
+        self.longitude_label = QLabel("Longitude: N/A")
+        self.start_button = QPushButton("Start Display")
+        self.exit_button = QPushButton("Exit")
+
+        self.start_button.clicked.connect(self.start_display)
+        self.exit_button.clicked.connect(self.close)
+
+        layout.addWidget(self.latitude_label)
+        layout.addWidget(self.longitude_label)
+        layout.addWidget(self.start_button)
+        layout.addWidget(self.exit_button)
+
+        self.setLayout(layout)
+
+    def start_display(self):
+        self.latitude_label.setText("Latitude: 35.652341")
+        self.longitude_label.setText("Longitude: -97.474812")
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+
+sys.exit(app.exec())
